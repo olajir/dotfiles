@@ -1,0 +1,42 @@
+# Fönsterinställningar (Transparens och marginaler)
+[window]
+opacity = 0.85
+blur = true
+
+[window.padding]
+x = 12
+y = 12
+
+# Typsnittsinställningar för Retina-skärmen
+[font]
+size = 13.0
+
+[font.normal]
+family = "monospace"
+style = "Regular"
+
+# Krispigt och mörkt färgtema (Perfekt för Vim)
+[colors.primary]
+background = "0x1d1f21"
+foreground = "0xc5c8c6"
+
+[colors.normal]
+black   = "0x1d1f21"
+red     = "0xcc6666"
+green   = "0xb5bd68"
+yellow  = "0xf0c674"
+blue    = "0x81a2be"
+magenta = "0xb294bb"
+cyan    = "0x8abeb7"
+white   = "0xc5c8c6"
+
+[colors.bright]
+black   = "0x666666"
+red     = "0xcc6666"
+green   = "0xb5bd68"
+yellow  = "0xf0c674"
+blue    = "0x81a2be"
+magenta = "0xb294bb"
+cyan    = "0x8abeb7"
+white   = "0xffffff"
+
