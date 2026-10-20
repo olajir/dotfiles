@@ -1,7 +1,9 @@
-" Starta pakethanteraren Vim-plug
+" ============================================================================
+" Plugins (vim-plug) — kör :PlugInstall efter ändringar
+" ============================================================================
 call plug#begin('~/.vim/plugged')
 
-" Installera LSP-motorn och auto-kompletteringen
+" LSP-motorn och auto-kompletteringen
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'prabirshrestha/asyncomplete.vim'
@@ -10,43 +12,47 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Git-integration för sidomenyn (visar + och - tecken live)
 Plug 'airblade/vim-gitgutter'
 
-" Integrerar uv / virtuella Python-miljöer direkt i Vim
-Plug 'linux-cultist/venv-selector.nvim'
+" Statusrad
+Plug 'itchyny/lightline.vim'
 
+" Integrera Claude Code
+Plug 'rishi-opensource/vim-claude-code'
 
 call plug#end()
 
-" Slå på auto-kompletteringsmenyn så fort du börjar skriva
-let g:asyncomplete_auto_popup = 1
-
-" Genvägar för kodnavigering (Vim-style):
-" Tryck 'gd' på en funktion för att hoppa till där den definierades (Go to Definition)
-nmap gd <plug>(lsp-definition)
-" Tryck 'K' (skift + k) på ett ord för att se dokumentationen live på skärmen
-nmap K <plug>(lsp-hover)
-
+" ============================================================================
+" Allmänt
+" ============================================================================
 " Säkerställ fullt stöd för svenska tecken och UTF-8
 set encoding=utf-8
 set fileencodings=utf-8,latin1
 
-" Aktivera radnummer och syntaxfärgning (matchar ditt Alacritty-tema!)
+" Radnummer och syntaxfärgning (matchar Alacritty-temat)
 set number
 syntax on
 
-" Konfigurera svensk stavningskontroll (men ha den avstängd vid start)
+" Svensk stavningskontroll, avstängd vid start — F7 slår på/av
 set spelllang=sv
 set nospell
+nnoremap <F7> :set spell!<CR>
 
-" Smidig Vim-genväg för att slå på/av stavning med tangenten F7
-nmap <F7> :set spell!<CR>
+" ============================================================================
+" LSP och komplettering
+" ============================================================================
+" Visa kompletteringsmenyn så fort du börjar skriva
+let g:asyncomplete_auto_popup = 1
 
-" Tvinga Vim att alltid visa statusraden (även om bara ett fönster är öppet)
+" gd = hoppa till definitionen, K = visa dokumentationen
+nmap gd <plug>(lsp-definition)
+nmap K <plug>(lsp-hover)
+
+" ============================================================================
+" Statusrad (Lightline)
+" ============================================================================
+" Visa alltid statusraden, och dölj -- INSERT -- eftersom Lightline visar läget
 set laststatus=2
-
-" Dölj det gamla standard-läget (-- INSERT --) eftersom Lightline visar det snyggare
 set noshowmode
 
-" Konfigurera Lightline-temat och färger
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -57,4 +63,3 @@ let g:lightline = {
       \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ }
       \ }
-

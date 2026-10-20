@@ -1,0 +1,20 @@
+[user]
+	name = Ola
+	email = ola@jirlow.se
+[init]
+	defaultBranch = main
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # Gör att du kan bläddra mellan ändringar med 'n' och 'N' (Vim-style!)
+    light = false      # Sätt till true om du använder en ljus terminalbakgrund
+    side-by-side = true # Visar gammal vs ny kod sida vid sida (otroligt snyggt på din breda skärm)
+    line-numbers = true # Visar radnummer i kodjämförelsen
+
+[merge]
+    conflictstyle = zdiff3
+

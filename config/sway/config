@@ -15,7 +15,7 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term alacritty
-
+# Your preferred application launcher
 set $menu bemenu-run -c -l 12 -W 0.3 --fn "Monospace 14" --hf "#ffffff" --hb "#4c7899" --tf "#4c7899"
 
 ### Output configuration
@@ -45,28 +45,22 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 ### Input configuration
 #
 # Example configuration:
-#
-    input type:touchpad {
-        tap enabled
-        natural_scroll enabled
-        pointer_accel 0.3
-        accel_profile "adaptive"
-        click_method clickfinger
-    }  
+# MacBook-styrplattan
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    pointer_accel 0.3
+    accel_profile "adaptive"
+    click_method clickfinger
+}
 
-#   input type:touchpad {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-
-   input type:keyboard {
-       xkb_layout "se"
-       xkb_variant "mac"
-       xkb_model "apple"
-       xkb_options "caps:escape"
-   }
+# Svensk Mac-layout, Caps Lock fungerar som Escape
+input type:keyboard {
+    xkb_layout "se"
+    xkb_variant "mac"
+    xkb_model "apple"
+    xkb_options "caps:escape"
+}
 #
 # You can also configure each device individually.
 # Read `man 5 sway-input` for more information about this section.
@@ -207,15 +201,16 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-#bindsym $mod+r mode "resize"
+# $mod+r öppnar ranger istället för resize-läget
+bindsym $mod+r exec $term -e ranger
 #
 # Utilities:
 #
-    # Special keys to adjust volume via PulseAudio
-    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
-    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
-    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+    # Ljud via PipeWire (F10 mute, F11/F12 volym, maxtak 100% för att skydda högtalarna)
+    bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+    bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+    bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
     # Special keys to control media via playerctl
     bindsym --locked XF86AudioPlay exec playerctl play-pause
@@ -224,9 +219,13 @@ mode "resize" {
     bindsym --locked XF86AudioNext exec playerctl next
     bindsym --locked XF86AudioStop exec playerctl stop
 
-    # Special keys to adjust brightness via brightnessctl
-    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
-    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+    # Skärmens ljusstyrka (F1/F2)
+    bindsym --locked XF86MonBrightnessDown exec brightnessctl --device='gmux_backlight' set 5%-
+    bindsym --locked XF86MonBrightnessUp exec brightnessctl --device='gmux_backlight' set +5%
+
+    # Tangentbordsbelysning (F5/F6)
+    bindsym --locked XF86KbdBrightnessDown exec brightnessctl --device='smc::kbd_backlight' set 10%-
+    bindsym --locked XF86KbdBrightnessUp exec brightnessctl --device='smc::kbd_backlight' set +10%
 
     # Special key to take a screenshot with grim
     bindsym Print exec grim
@@ -250,33 +249,7 @@ bar {
     }
 }
 
-include /etc/sway/config.d/*
-
+# Retina-skärmen
 output eDP-1 scale 2
 
-exec_always while true; do /home/ola/bin/get_battery.sh > /home/ola/var/battery_status.txt; sleep 60; done
-
-bindsym $mod+r exec alacritty -e ranger
-
-# Sänk tangentbordsbelysningen med F5
-bindsym XF86KbdBrightnessDown exec brightnessctl --device='smc::kbd_backlight' set 10%-
-
-# Höj tangentbordsbelysningen med F6
-bindsym XF86KbdBrightnessUp exec brightnessctl --device='smc::kbd_backlight' set +10%
-
-# Sänk skärmens ljusstyrka med F1
-bindsym XF86MonBrightnessDown exec brightnessctl --device='gmux_backlight' set 5%-
-
-# Höj skärmens ljusstyrka med F2
-bindsym XF86MonBrightnessUp exec brightnessctl --device='gmux_backlight' set +5%
-
-# Ljud av / Mute med F10
-bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-
-# Sänk volymen med F11
-bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-
-# Höj volymen med F12 (med ett maxtak på 100% för att skydda högtalarna)
-bindsym XF86AudioRaiseVolume exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
-
-
+include /etc/sway/config.d/*

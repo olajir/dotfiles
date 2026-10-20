@@ -40,3 +40,8 @@ magenta = "0xb294bb"
 cyan    = "0x8abeb7"
 white   = "0xffffff"
 
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
