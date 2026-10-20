@@ -201,8 +201,9 @@ mode "resize" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-# $mod+r öppnar ranger istället för resize-läget
+# $mod+r öppnar ranger, $mod+Shift+r startar resize-läget
 bindsym $mod+r exec $term -e ranger
+bindsym $mod+Shift+r mode "resize"
 #
 # Utilities:
 #
