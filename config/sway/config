@@ -254,3 +254,9 @@ bar {
 output eDP-1 scale 2
 
 include /etc/sway/config.d/*
+
+# Automatisk suspend efter inaktivitet
+exec swayidle -w \
+     timeout 600 'systemctl suspend' \
+     before-sleep 'swaylock -f -c 000000'
+
