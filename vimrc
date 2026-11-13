@@ -18,6 +18,10 @@ Plug 'itchyny/lightline.vim'
 " Integrera Claude Code
 Plug 'rishi-opensource/vim-claude-code'
 
+" Markdown
+Plug 'dense-analysis/ale'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
 call plug#end()
 
 " ============================================================================
